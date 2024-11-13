@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Web Counter Waktu</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+        }
+        #timer {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        #revealButton {
+            display: none;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+        }
+        #image {
+            margin-top: 20px;
+            max-width: 500px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="timer">05:00:00</div>
+<button id="revealButton" onclick="showImage()">Lihat Gambar</button>
+<img id="image" src="path/to/your/image.jpg" alt="Gambar Akan Muncul Disini">
+
+<script>
+    // Hitung waktu 5 jam dalam milidetik
+    const countdownTime = 5 * 60 * 60 * 1000;
+    const timerDisplay = document.getElementById("timer");
+    const revealButton = document.getElementById("revealButton");
+    const image = document.getElementById("image");
+
+    let endTime = Date.now() + countdownTime;
+
+    function updateTimer() {
+        let now = Date.now();
+        let timeLeft = endTime - now;
+
+        if (timeLeft > 0) {
+            let hours = Math.floor(timeLeft / (1000 * 60 * 60));
+            let minutes = Math.floor((timeLeft % (1000 * 60 * 60)) / (1000 * 60));
+            let seconds = Math.floor((timeLeft % (1000 * 60)) / 1000);
+
+            // Tampilkan waktu dengan format 2 digit
+            timerDisplay.textContent = 
+                ("0" + hours).slice(-2) + ":" + 
+                ("0" + minutes).slice(-2) + ":" + 
+                ("0" + seconds).slice(-2);
+
+        } else {
+            clearInterval(timerInterval);
+            timerDisplay.style.display = "none";
+            revealButton.style.display = "block";
+        }
+    }
+
+    // Jalankan timer
+    const timerInterval = setInterval(updateTimer, 1000);
+
+    function showImage() {
+        revealButton.style.display = "none";
+        image.style.display = "block";
+    }
+</script>
+
+</body>
+</html>
+
